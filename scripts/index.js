@@ -13,6 +13,11 @@ error = (err) => {
     err.code == 1 ?  console.log("Please alllow location service from your device!") : console.log("Something went wrong!")
 }
 
-navigator.geolocation.watchPosition(ok, error)
+options = {
+    enableHighAccuracy: true,
+    timeout: 3000,
+}
 
+let id = navigator.geolocation.watchPosition(ok, error, options)
+console.log(id)
 
