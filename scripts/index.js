@@ -1,9 +1,7 @@
-// get device lat and long
 const loc = document.getElementById("location")
 
-
 // initializing
-var map = L.map('map').setView([25.7181848, 89.2631757], 13)
+let map = L.map('map').setView([25.7181848, 89.2631757], 13)
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 20,
@@ -11,13 +9,13 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map)
 
 // adding some custom marker 
-let messIcon = L.icon({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/10607/10607354.png',
-    iconSize: [30, 30],
-    iconAnchor:   [15, 30],
-    popupAnchor:  [-3, -76]
-})
-L.marker([25.7182115, 89.2631706], {icon: messIcon}).addTo(map).bindPopup("My mess is here...")
+// let messIcon = L.icon({
+//     iconUrl: 'https://cdn-icons-png.flaticon.com/512/4904/4904150.png',
+//     iconSize: [50, 50],
+//     iconAnchor:   [50, 50],
+//     popupAnchor:  [-3, -76]
+// })
+// L.marker([25.7182115, 89.2631706], {icon: messIcon}).addTo(map).bindPopup("My mess is here...")
 
 let marker;
 let circle;
@@ -38,10 +36,13 @@ ok = (position) => {
     
     c = rayCasting([lat, lon], coordinates)
     m = rayCasting([lat, lon], mess)
-    loc.innerHTML = `lat: ${lat}<br>lon: ${lon}<br>acc: ${acc}<br> ${c? "**Inside of the campus": "**Outside of the campus"}<br>${m? "**Inside of the mess!": "**Outside of the mess"}`
+    loc.innerHTML = `lat: ${lat}<br>lon: ${lon}<br>radius: ${acc} meters<br> ${c? "**Inside of the campus": "**Outside of the campus"}<br>${m? "**Inside of the mess": "**Outside of the mess"}`
     
 
     circle = L.circle([lat, lon], {radius: acc}).addTo(map)
+    if (!zoomed) {
+        zoomed = map.fitBounds(circle.getBounds()); 
+    }
 
 }
 
@@ -59,7 +60,7 @@ let id = navigator.geolocation.watchPosition(ok, error, options)
 
 
 // Creating coordinates for drawing boundary layer
-var coordinates = [
+const coordinates = [
     [25.7196137, 89.2578151],
     [25.7195662, 89.2587164],
     [25.7200268, 89.2587119],
@@ -118,15 +119,15 @@ let polygonMess = L.polygon(mess, { color: 'green' }).addTo(map).bindPopup("Mess
 map.fitBounds(polygonMess.getBounds());
 
 rayCasting = (coords, polygon) => {
-    var x = coords[0];
-    var y = coords[1];
+    let x = coords[0];
+    let y = coords[1];
 
-    var inside = false;
-    for (var i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-        var xi = polygon[i][0], yi = polygon[i][1];
-        var xj = polygon[j][0], yj = polygon[j][1];
+    let inside = false;
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        let xi = polygon[i][0], yi = polygon[i][1];
+        let xj = polygon[j][0], yj = polygon[j][1];
 
-        var intersect = ((yi > y) != (yj > y)) &&
+        let intersect = ((yi > y) != (yj > y)) &&
             (x < ((xj - xi) * (y - yi) / (yj - yi)) + xi);
 
         if (intersect) inside = !inside;
