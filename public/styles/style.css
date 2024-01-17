@@ -1,7 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
+*{
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --lato: 'Lato', sans-serif;
+    --number: 'Josefin Sans', sans-serif;
+}
 
 #map {
-    height: 380px;
+    height: 100%;
+}
+
+.form {
+    position: fixed;
+    z-index: 999999999999;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    font-family: var(--lato);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.input-field{
+    padding: 10px;
+}
+
+input[type=text]{
+    border: none;
+    background-color: #df637c74;
+    padding: 14px 20px;
+    border-radius: 1rem;
+    font-family: var(--lato);
+    width: 20rem;
+}
+
+input:focus{
+    outline: 1px solid rgb(200, 199, 199);
+}
+
+
+button{
+    outline: none;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 1rem;
+    margin-top: 0.5rem;
+    background-color: crimson;
+    color: #fff;
+    font-family: var(--lato);
+    font-weight: bolder;
+    font-size: 0.8rem;
+}
+
+.check{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: bolder;
+    color: rgb(47, 42, 39);
+    margin-left: 0.3rem;
+}
+.logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    font-weight: 700;
+}
+
+.logo img{
+ height: 2.5rem;
 }
 
 .client-card {
@@ -10,4 +98,66 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 10px;
     margin-top: 5px;
+    display: none;
 }
+
+.toastify{
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 20px;
+
+}
+
+.toast-close{
+    margin-bottom: 10px;
+}
+
+.bottom-card {
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    height: 8rem;
+    z-index: 999999999999;
+    bottom: 0;
+    border-top-left-radius: 3.125rem;
+    border-top-right-radius: 3.125rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-family: var(--number);
+    text-align: center;
+    
+}
+
+.distance{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.distance span{
+    font-size: 1rem;
+}
+
+.my-latlon{
+    position: fixed;
+    top: 0;
+    right: 1%;
+    z-index: 999;
+    font-size: 0.6rem;
+    color: gray;
+    text-align: right;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+

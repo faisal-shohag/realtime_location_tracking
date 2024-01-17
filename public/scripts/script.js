@@ -1,5 +1,7 @@
 const clientList = document.querySelector('#clients')
-
+const bottomCard = document.querySelector('.bottom-card')
+const mylatlon = document.querySelector('.my-latlon')
+const splash = document.querySelector('.splash')
 // socket io
 let socket = io.connect('https://locationreal.onrender.com/')
 
@@ -11,21 +13,44 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a traget="_blank" href="https://github.com/faisal-shohag/realtime_location_tracking">faisal-shohag</a>'
 }).addTo(map)
 
+let userName = localStorage.getItem('username') 
 
 let marker;
 let circle;
 let zoomed;
-
+let liveSetView = false;
+let present_destination;
+let geoAllowed = false;
 
 ok = (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    const acc = position.coords.accuracy
-    socket.emit('client-location', {lat, lon, acc})
+    const acc = position.coords.accuracy;
+    present_destination = [lat, lon]
+    if(liveSetView) {
+        map.setView([data.lat, data.lon], 17)
+    }
+    socket.emit('client-location', {lat, lon, acc, username: userName})
+    mylatlon.innerHTML = `Lat: ${lat} Lon: ${lon}`
+    let distance = calculateDistance(lat, lon, 25.71686, 89.2622945)
+    
+    bottomCard.innerHTML = `
+        <div class="distance">${distance < 1 ? (distance*1000).toFixed(2)+"<span>M</span>" : distance.toFixed(2)+"<span>KM</span>"}</div>
+        <div class="location">BRUR Campus</div>
+        `
+    getLocationByLatLon(lat, lon)
+    .then(address => {
+        address = address+','
+        locationName = address.split(',')[0]
+        mylatlon.innerHTML += `<br>${locationName}`
+        // console.log(locationName)
+
+        
+    })
 }
 
 error = (err) => {
-    err.code == 1 ?  console.log("Please alllow location service from your device!") : console.log("Something went wrong!")
+    err.code == 1 ?  console.log("Please alllow location service from your device!") : console.log("Something went wrong!", err)
 }
 
 options = {
@@ -40,10 +65,18 @@ if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
         let data = {
             lat: position.coords.latitude,
-            lon: position.coords.longitude
+            lon: position.coords.longitude,
         }
+        if(userName) {
+            splash.classList.remove('show')
+            splash.classList.add('hide')
+        } else {
+            splash.classList.remove('hide')
+            splash.classList.add('show')
+        }
+        map.setView([data.lat, data.lon], 17)
+        socket.emit('client-join-location', {...data, username: userName})
 
-        socket.emit('client-join-location', data)
     })
 
 } else {
@@ -52,7 +85,7 @@ if(navigator.geolocation) {
 
 // notify user join
 socket.on('client-join-server', (data) =>  {
-    toast(`${data.id} has joined to the map!`)
+    joinToast(`${data.username ? data.username : data.id} has joined to the map!`)
 })
 
 // Realtime user navigation
@@ -86,7 +119,7 @@ socket.on('server-location', (data)=> {
         lon: data.lon,
         acc: data.acc,
         pointMarker: function() {
-            L.marker([data.lat, data.lon]).addTo(map).bindTooltip(data.id, {parmanent: true, direction: 'top'}).openTooltip()
+            L.marker([data.lat, data.lon]).addTo(map).bindTooltip(data.username ? data.username : data.id, {parmanent: true, direction: 'top'}).openTooltip()
         },
         
     }
@@ -94,10 +127,9 @@ socket.on('server-location', (data)=> {
 })
 
 socket.on('disconnected_user', (data) => {
-    console.log("Disconnected user: ", data)
     delete connected_users[data.id]
     updateMap()
-    toast(`${data.id} has left from the map!`)
+    leftToast(`${data.username ? data.username : data.id} has left from the map!`)
 })
 
 

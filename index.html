@@ -12,8 +12,28 @@
 <body>
 
     <div id="map"></div>
-    <div id="clients"></div>
+    <div class="app-contents">
+        <div class="bottom-card hide"></div>
+        <div id="clients"></div>
+        <div class="my-latlon"></div>
+    </div>
 
+<div class="splash">
+    <div class="form">
+        <div class="logo"><img src="./images/3d-navigation.png"> <div class="logo-title">Real Time Tracker</div></div>
+        <div class="loc-state">Location State: <span id="loc-state">Waiting...</span></div>
+        <form id="form">
+           <div class="input-field">
+            <input name="username" type="text" placeholder="Your Name" required>
+           </div>
+           <div class="input-field check">
+            <input name="check" type="checkbox" checked="checked"> <span>Save for the nextime.</span>
+           </div>
+            
+           <button class="btn">Go</button>
+        </form>
+    </div>
+</div>
   
     
     <!-- Scripts -->
@@ -25,6 +45,7 @@
     <script src="./scripts/coords.js"></script>
     <script src="./scripts/methods.js"></script>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/control.js"></script>
     
 </body>
 </html>
