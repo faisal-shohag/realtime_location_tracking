@@ -1,3 +1,5 @@
+function main(username) {
+
 const clientList = document.querySelector('#clients')
 const bottomCard = document.querySelector('.bottom-card')
 const mylatlon = document.querySelector('.my-latlon')
@@ -12,8 +14,6 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 20,
     attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a traget="_blank" href="https://github.com/faisal-shohag/realtime_location_tracking">faisal-shohag</a>'
 }).addTo(map)
-
-let userName = localStorage.getItem('username') 
 
 let marker;
 let circle;
@@ -30,7 +30,7 @@ ok = (position) => {
     if(liveSetView) {
         map.setView([data.lat, data.lon], 17)
     }
-    socket.emit('client-location', {lat, lon, acc, username: userName})
+    socket.emit('client-location', {lat, lon, acc, username: username})
     mylatlon.innerHTML = `Lat: ${lat} Lon: ${lon}`
     let distance = calculateDistance(lat, lon, 25.71686, 89.2622945)
     
@@ -67,15 +67,8 @@ if(navigator.geolocation) {
             lat: position.coords.latitude,
             lon: position.coords.longitude,
         }
-        if(userName) {
-            splash.classList.remove('show')
-            splash.classList.add('hide')
-        } else {
-            splash.classList.remove('hide')
-            splash.classList.add('show')
-        }
         map.setView([data.lat, data.lon], 17)
-        socket.emit('client-join-location', {...data, username: userName})
+        socket.emit('client-join-location', {...data, username: username})
 
     })
 
@@ -161,3 +154,5 @@ let rayCasting = (coords, polygon) => {
 
 
 
+
+}

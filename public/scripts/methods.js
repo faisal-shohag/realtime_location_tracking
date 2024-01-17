@@ -77,10 +77,8 @@ return fetch(nominatimEndpoint)
         return response.json();
     })
     .then(result => {
-        console.log(result)
-       
+        // console.log(result)
         const address = result.display_name;
-
         return address;
     })
     .catch(error => {
