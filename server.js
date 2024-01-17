@@ -24,8 +24,11 @@ io.on('connection', (socket) => {
     console.log("A User connected! user id: "+socket.id)
 
     socket.on('client-location', (data)=>{
-        console.log(data);
         io.emit('server-location', {...data, id: socket.id});
+    })
+
+    socket.on('client-join-location', (data) => {
+        io.emit('client-join-server', {...data, id: socket.id})
     })
 
 
