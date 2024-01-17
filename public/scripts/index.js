@@ -1,7 +1,7 @@
 const clientList = document.querySelector('#clients')
 
 // socket io
-let socket = io()
+let socket = io.connect('https://locationreal.onrender.com/')
 
 // initializing
 let map = L.map('map').setView([25.7181848, 89.2631757], 13)
