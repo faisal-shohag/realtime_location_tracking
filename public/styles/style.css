@@ -1,3 +1,13 @@
+
+
 #map {
     height: 380px;
+}
+
+.client-card {
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 10px;
+    margin-top: 5px;
 }

@@ -1,9 +1,7 @@
+const clientList = document.querySelector('#clients')
+
 // socket io
 let socket = io()
-
-
-
-const loc = document.getElementById("location")
 
 // initializing
 let map = L.map('map').setView([25.7181848, 89.2631757], 13)
@@ -31,24 +29,7 @@ ok = (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     const acc = position.coords.accuracy
-
     socket.emit('client-location', {lat, lon, acc})
-    // if(marker) {
-    //     map.removeLayer(marker)
-    //     map.removeLayer(circle)
-    // }
-    // marker = L.marker([lat, lon]).addTo(map)
-    
-    // c = rayCasting([lat, lon], coordinates)
-    // m = rayCasting([lat, lon], mess)
-    // loc.innerHTML = `lat: ${lat}<br>lon: ${lon}<br>radius: ${acc} meters<br> ${c? "**Inside of the campus": "**Outside of the campus"}<br>${m? "**Inside of the mess": "**Outside of the mess"}`
-    
-
-    // circle = L.circle([lat, lon], {radius: acc}).addTo(map)
-    // if (!zoomed) {
-    //     zoomed = map.fitBounds(circle.getBounds()); 
-    // }
-    
 }
 
 error = (err) => {
@@ -68,6 +49,7 @@ let connected_users = {}
 
 socket.on('server-location', (data)=> {
     console.log("Location from server: ", data);
+    clientList.innerHTML = ''
     connected_users[data.id] = {
         lat: data.lat,
         lon: data.lon,
@@ -88,6 +70,14 @@ socket.on('server-location', (data)=> {
     for(let key in connected_users) {
         if(connected_users.hasOwnProperty(key)) {
             connected_users[key].pointMarker();
+            campus_stat = rayCasting([connected_users[key].lat, connected_users[key].lon], coordinates)
+            clientList.innerHTML += `
+            <div class="client-card">
+            <div class="id">${key}</div>
+            <div class="latlon">Lat: ${connected_users[key].lat} | Lon: ${connected_users[key].lon}</div>
+            <div class="status">Campus status: ${campus_stat ? "Inside campus!" : "Outside campus!"}</div>
+            </div>
+            `
         }
     }
 })
@@ -99,7 +89,7 @@ socket.on('disconnected_user', (data) => {
 })
 
 
-// Creating coordinates for drawing boundary layer
+// Creating coordinates for drawing boundary layer for brur
 const coordinates = [
     [25.7196137, 89.2578151],
     [25.7195662, 89.2587164],
