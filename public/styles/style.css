@@ -73,6 +73,10 @@ button{
     font-size: 0.8rem;
 }
 
+#form button{
+    width: 100%;
+}
+
 .check{
     display: flex;
     gap: 0.5rem;
@@ -291,6 +295,9 @@ a{
 }
 
 
+.loc-state{
+    text-align: center;
+}
 
 .menu-item:hover{
 opacity: 0.5;

@@ -27,8 +27,8 @@
 <div class="splash">
     <div class="form">
         <div class="logo"><img src="./images/3d-navigation.png"> <div class="logo-title">Real Time Tracker</div></div>
-        <div class="loc-state">Location State: <span id="loc-state">Waiting...</span></div>
-        <form id="form">
+        <div class="loc-state">Location State: <span id="loc-state">Waiting...<br><small>Please allow location service from your browser. Make sure your device's gps is turned on.</small></span></div>
+        <form id="form" class="hide">
            <div class="input-field">
             <input name="username" type="text" placeholder="Your Name" required>
            </div>
@@ -61,9 +61,9 @@
                 <i class="ri-road-map-fill"></i>
              </a>
          </li>
-         <li class="menu-item">
+         <li class="menu-item" id="reset-username">
              <a href="#menu">
-                <i class="ri-map-pin-add-fill"></i>
+                <i class="ri-refresh-fill"></i>
              </a>
          </li>
      </ul>

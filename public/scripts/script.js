@@ -74,6 +74,7 @@ if(navigator.geolocation) {
 // notify user join
 socket.on('client-join-server', (data) =>  {
     joinToast(`${data.username ? data.username : data.id} has joined to the map!`)
+    notifyMe(`${data.username ? data.username : data.id} joined just now!`, `${data.username ? data.username : data.id} has joined to the map!`)
 })
 
 // Realtime user navigation
