@@ -20,8 +20,12 @@
     <div id="map"></div>
     <div class="app-contents">
         <div class="bottom-card hide"></div>
-        <div id="clients"></div>
         <div class="my-latlon"></div>
+    </div>
+    
+    <div class="client-container">
+        
+    <div id="clients"></div>
     </div>
 
 <div class="splash">
@@ -46,17 +50,17 @@
     <ul id="menu">
          <a class="menu-button icon-plus" id="open-menu" href="#menu" title="Show navigation"> <i class="ri-layout-grid-fill"></i></a>
          <a class="menu-button icon-minus" href="#0" title="Hide navigation"><i class="ri-layout-grid-fill"></i> Quick Menu</a>
-         <li class="menu-item">
+         <li class="menu-item myposition">
              <a href="#menu">
                 <i class="ri-navigation-fill"></i>
              </a>
          </li>
-         <li class="menu-item">
+         <li class="menu-item open-client">
              <a href="#menu">
                 <i class="ri-map-pin-user-fill"></i>
              </a>
          </li>
-         <li class="menu-item">
+         <li class="menu-item go">
              <a href="#menu">
                 <i class="ri-road-map-fill"></i>
              </a>
@@ -69,6 +73,11 @@
      </ul>
     </div>
 </div>
+
+
+<div class="view-container">
+    <div class="satellite view" id="sat"></div>
+</div>
   
     
     <!-- Scripts -->
@@ -77,15 +86,18 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.6/platform.min.js" integrity="sha512-eYPrm8TgYWg3aa6tvSRZjN4v0Z9Qx69q3RhfSj+Mf89QqwOMqmwSlsVqfp4N8NVAcZe/YeUhh9x/nM2CAOp6cA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./scripts/coords.js"></script>
     <script src="./scripts/methods.js"></script>
-    <script src="./scripts/control.js"></script>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/control.js"></script>
+    
 
     <!-- <script src="./public/scripts/coords.js"></script>
     <script src="./public/scripts/methods.js"></script>
-    <script src="./public/scripts/control.js"></script>
-    <script src="./public/scripts/script.js"></script> -->
+    <script src="./public/scripts/script.js"></script>
+    <script src="./public/scripts/control.js"></script> -->
+
     
     
 </body>

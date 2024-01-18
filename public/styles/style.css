@@ -100,13 +100,72 @@ button{
  height: 2.5rem;
 }
 
+.client-container{
+    display: none;
+}
+
+
+.close-client{
+    position: absolute;
+    top: 50%;
+    left: -8%;
+    font-size: 2rem;
+    height: 50px;
+    width: 50px;
+    background: crimson;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+
+#clients{
+    position: fixed;
+    right: 0;
+    bottom: 0%;
+    z-index: 9999;
+    background-color: #4a474760;
+    height: 100%;
+    padding: 4rem 2rem 0rem 1rem;
+}
+
 .client-card {
     padding: 10px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 10px;
-    margin-top: 5px;
-    display: none;
+    margin-top: 1rem;
+    font-family: var(--gb);
+    display: flex;
+    flex-direction: column;
+    /* display: none; */
+}
+
+.client-card .id{
+    color: orangered;
+    font-size: 0.9rem;
+}
+
+.client-card .platform{
+    font-size: 0.7rem;
+
+}
+
+.client-card .platform span{
+    color: crimson;
+}
+
+.client-card .latlon{
+    font-size: 0.8rem;
+    color: #6D6969;
+}
+
+.client-card .status{
+    font-size: 0.8rem;
+    color: deeppink;
 }
 
 .toastify{
@@ -338,4 +397,30 @@ opacity: 0.5;
   top: 70%;
   left: 50%;
   font-size: 20px;
+}
+
+.view-container{
+    /* background-color: red; */
+    z-index: 99999;
+    position: fixed;
+    left: 4%;
+    bottom: 2.5%;
+    
+
+}
+
+.view{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 0.5rem;
+    border: 2px solid #fbfbfb;
+}
+.satellite{
+    background-image: url("https://i.postimg.cc/rmCFRT5y/satellite.png");
+    background-size: contain;
+}
+
+.street{
+    background-image: url("https://i.postimg.cc/k4dg5G6h/street.png");
+    background-size: contain;
 }

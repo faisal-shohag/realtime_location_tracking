@@ -3,7 +3,10 @@ const locState = document.querySelector('#loc-state')
 const splash = document.querySelector('.splash')
 const username = localStorage.getItem('username')
 const reset = document.querySelector('#reset-username')
+const openClient = document.querySelector('.open-client')
 
+const clientContainer = document.querySelector('.client-container')
+if(navigator.geolocation){
 navigator.geolocation.getCurrentPosition((position) => {
         locState.innerHTML = 'Allowed';
         let username = localStorage.getItem('username')
@@ -11,7 +14,7 @@ navigator.geolocation.getCurrentPosition((position) => {
         if(username) {
             splash.classList.remove('show')
             splash.classList.add('hide')
-            main(username)
+            main(username, position.coords.latitude, position.coords.longitude)
         } else {
             form.classList.remove('hide')
             form.classList.add('show')
@@ -20,7 +23,7 @@ navigator.geolocation.getCurrentPosition((position) => {
                 if(form.check.checked) {
                     localStorage.setItem('username', form.username.value)
                 } 
-                main(form.username.value)
+                main(form.username.value, position.coords.latitude, position.coords.longitude)
                 splash.classList.add('hide')
             })
         }
@@ -30,28 +33,37 @@ navigator.geolocation.getCurrentPosition((position) => {
             window.location.reload()
         })
     })
+} else {
+    console.log('Not supported!')
+}
+
+openClient.addEventListener('click', ()=>{
+    clientContainer.style.display = 'block';
+    const closeClient = document.querySelector('.close-client')
+    closeClient.addEventListener('click', ()=>{clientContainer.style.display = 'none'})
+})
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        if (!Notification) {
-          alert('Desktop notifications not available in your browser. Try Chromium.');
-          return;
-        }
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     if (!Notification) {
+    //       alert('Desktop notifications not available in your browser. Try Chromium.');
+    //       return;
+    //     }
       
-        if (Notification.permission !== "granted")
-          Notification.requestPermission();
-      });
+    //     if (Notification.permission !== "granted")
+    //       Notification.requestPermission();
+    //   });
       
-      function notifyMe(title, msg, logo="https://github.com/faisal-shohag/realtime_location_tracking/blob/master/public/images/3d-navigation.png?raw=true") {
-        if (Notification.permission !== "granted")
-          Notification.requestPermission();
-        else {
-          var notification = new Notification(title, {
-            icon: logo,
-            body: msg,
-          });
-        }
-      }
+    //   function notifyMe(title, msg, logo="https://github.com/faisal-shohag/realtime_location_tracking/blob/master/public/images/3d-navigation.png?raw=true") {
+    //     if (Notification.permission !== "granted")
+    //       Notification.requestPermission();
+    //     else {
+    //       var notification = new Notification(title, {
+    //         icon: logo,
+    //         body: msg,
+    //       });
+    //     }
+    //   }
       
      
 
