@@ -20,10 +20,13 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+let current_users = {}
+
 io.on('connection', (socket) => {
     console.log("A User connected! user id: "+socket.id)
 
     socket.on('client-location', (data)=>{
+        current_users[socket.id] = data.username;
         io.emit('server-location', {...data, id: socket.id});
     })
 
@@ -34,7 +37,8 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log('User disconnected: ' + socket.id);
-        io.emit('disconnected_user', {id: socket.id})
+        io.emit('disconnected_user', {id: socket.id, username: current_users[socket.id]})
+        delete current_users[socket.id]
       });
 
 })

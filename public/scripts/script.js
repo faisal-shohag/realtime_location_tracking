@@ -15,12 +15,9 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a traget="_blank" href="https://github.com/faisal-shohag/realtime_location_tracking">faisal-shohag</a>'
 }).addTo(map)
 
-let marker;
-let circle;
-let zoomed;
+
 let liveSetView = false;
 let present_destination;
-let geoAllowed = false;
 
 ok = (position) => {
     const lat = position.coords.latitude;
@@ -38,15 +35,13 @@ ok = (position) => {
         <div class="distance">${distance < 1 ? (distance*1000).toFixed(2)+"<span>M</span>" : distance.toFixed(2)+"<span>KM</span>"}</div>
         <div class="location">BRUR Campus</div>
         `
-    getLocationByLatLon(lat, lon)
-    .then(address => {
-        address = address+','
-        locationName = address.split(',')[0]
-        mylatlon.innerHTML += `<br>${locationName}`
-        // console.log(locationName)
-
-        
-    })
+    // getLocationByLatLon(lat, lon)
+    // .then(address => {
+    //     address = address+','
+    //     locationName = address.split(',')[0]
+    //     mylatlon.innerHTML += `<br>${locationName}`
+    //     // console.log(locationName)
+    // })
 }
 
 error = (err) => {
