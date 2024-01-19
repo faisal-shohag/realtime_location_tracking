@@ -211,10 +211,13 @@ function main(username, ulat, ulon) {
     `
   }
 
-  reEl = document.querySelector('.rec')
-  recEl.addEventListener('click', ()=> {
-    let id = parseInt(recEl.id);
+  recEl = document.querySelectorAll('.rec')
+  recEl.forEach(function(element) {
+  element.addEventListener('click', ()=> {
+    let id = parseInt(element.id);
+    // console.log(id)
     map.setView(recomendData[id].latlon, 17);
   })
+})
 
 }
