@@ -52,3 +52,19 @@ const mess =[
     [25.717886, 89.263553],
     [25.718278, 89.263420]
 ]
+
+
+let recomendData = [
+    {
+        placeName: 'Begum Rokeya University, Rangpur',
+        desc: 'Modern Road, Rangpur',
+        latlon: [25.71686, 89.2622945],
+        img: 'https://i.postimg.cc/FK6xb1jv/Screenshot-2024-01-19-113738.png',
+    },
+    {
+        placeName: 'Lalmonirhat Sadar',
+        desc: 'Mission more, Lalmonirhat',
+        latlon: [25.911795726402218, 89.433941219013],
+        img: 'https://i.postimg.cc/HxLtXXJB/Screenshot-2024-01-19-113540.png'
+    }
+  ]

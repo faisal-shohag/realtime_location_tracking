@@ -5,17 +5,14 @@ function main(username, ulat, ulon) {
   const view = document.querySelector(".view");
   const viewContainer = document.querySelector(".view-container");
   const myposition = document.querySelector(".myposition")
+  const recomends = document.querySelector('.recomends')
 
-  
-//   const street = document.querySelector(".street");
-  // socket io
   let socket = io.connect("https://locationreal.onrender.com/");
 
   // initializing
   let map = L.map("map").setView([ulat, ulon], 17);
-
-  myposition.addEventListener('click', ()=>{map.setView([ulat, ulon], 17)})
-
+  map.on('click', mapClick);
+ 
   console.log(ulat, ulon);
   socket.emit("client-join-location", {
     lat: ulat,
@@ -59,6 +56,8 @@ function main(username, ulat, ulon) {
 
   let liveSetView = false;
   let present_destination;
+  myposition.addEventListener('click', ()=>{map.setView(present_destination, 17); window.history.back()})
+
 
   ok = (position) => {
     const lat = position.coords.latitude;
@@ -105,7 +104,7 @@ function main(username, ulat, ulon) {
   // Realtime user navigation
   let connected_users = {};
   let updateMap = () => {
-    clientList.innerHTML = `<div class="close-client"><i class="ri-close-line"></i></div>`;
+    clientList.innerHTML = ``;
     map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         map.removeLayer(layer);
@@ -197,4 +196,25 @@ function main(username, ulat, ulon) {
 
     return inside;
   };
+
+  recomends.innerHTML = '';
+  // recomendation places
+  for(let i=0; i<recomendData.length; i++) {
+    recomends.innerHTML += `
+    <div class="rec-wrap">
+    <div id="${i}" class="rec" style="background-image: url('${recomendData[i].img}');">
+      <div class="rec-title">${recomendData[i].placeName}</div>
+      <div class="rec-desc"><i class="ri-map-pin-2-fill"></i> ${recomendData[i].desc}</div>
+      <div class="hover-button"><i class="ri-compass-discover-fill"></i></div>
+    </div>
+    </div>
+    `
+  }
+
+  reEl = document.querySelector('.rec')
+  recEl.addEventListener('click', ()=> {
+    let id = parseInt(recEl.id);
+    map.setView(recomendData[id].latlon, 17);
+  })
+
 }

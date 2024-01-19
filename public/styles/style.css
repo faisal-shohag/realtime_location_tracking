@@ -107,8 +107,8 @@ button{
 
 .close-client{
     position: absolute;
-    top: 50%;
-    left: -8%;
+    top: 45%;
+    right: 17.2rem;
     font-size: 2rem;
     height: 50px;
     width: 50px;
@@ -120,6 +120,7 @@ button{
     color: #fff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: pointer;
+    z-index: 99999;
 }
 
 #clients{
@@ -130,6 +131,7 @@ button{
     background-color: #4a474760;
     height: 100%;
     padding: 4rem 2rem 0rem 1rem;
+    border-top-left-radius: 6rem;
 }
 
 .client-card {
@@ -243,7 +245,7 @@ a{
 
 .menu-wrap{
     position: fixed;
-    left: 55%;
+    left: 50%;
     bottom: 5%;
     z-index: 9999;
     transform: translate(-50%, -50%);
@@ -290,10 +292,10 @@ a{
     background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     font-size: 1.1rem;
-    width: 70px;
-    height: 70px;
+    width:65px;
+    height: 65px;
     left: 70%;
-    top: 65%;
+    top: 70%;
     font-size: 1.5rem;
 
     
@@ -336,7 +338,7 @@ a{
     position: absolute;
     left: 55%;
     line-height: 5px;
-    top: 50%;
+    top: 55%;
     margin: -50px 0 0 -50px;
     border-radius: 50%;
     transform: translate(0px, 0px);
@@ -424,3 +426,103 @@ opacity: 0.5;
     background-image: url("https://i.postimg.cc/k4dg5G6h/street.png");
     background-size: contain;
 }
+
+.recomend-container{
+    display: none;
+}
+
+.recomends{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+    background-color: #F8F8F8;
+    bottom: 20%;
+    max-width: 100%;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 10px;
+    border-radius: 1rem;
+    right: 0;
+    left: 1rem;
+    overflow: scroll;
+}
+
+.rec {
+    position: relative;
+    height: 180px;
+    width: 200px !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: baseline;
+    color: #fff;
+    padding: 10px;
+    gap: 0.5rem;
+    box-shadow: inset 100px 0px 100px 0px #07021198;
+}
+
+.rec-title{
+    font-family: var(--gb);
+}
+
+.rec-desc{
+    font-family: var(--gr);
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.rec .hover-button{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    display: none;
+    background-color: #EDE0E07E;
+    top: 0;
+    left: 0;
+    border-radius: 0.5rem;
+}
+
+.rec:hover .hover-button{
+    display: block;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    /* background-color: #424242; */
+    cursor: pointer;
+}
+
+.hover-button i {
+    background: -webkit-linear-gradient(
+        #ee0979,
+        #ff6a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rec-close {
+    position: absolute;
+    bottom: 45%;
+    left: 0.5rem;
+    font-size: 2rem;
+    height: 50px;
+    width: 50px;
+    background: crimson;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+    z-index: 99999;
+} 

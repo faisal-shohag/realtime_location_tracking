@@ -89,3 +89,6 @@ return fetch(nominatimEndpoint)
 
 
 
+let mapClick = (e) => {
+  console.log(e.latlng)
+}
