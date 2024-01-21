@@ -7,10 +7,11 @@ function main(username, ulat, ulon) {
   const myposition = document.querySelector(".myposition")
   const recomends = document.querySelector('.recomends')
 
-  let socket = io.connect("https://locationreal.onrender.com/");
+  // let socket = io.connect("https://locationreal.onrender.com/");
+  let socket = io();
 
   // initializing
-  let map = L.map("map").setView([ulat, ulon], 17);
+  let map = L.map("map").setView([ulat, ulon], 10);
   map.on('click', mapClick);
  
   console.log(ulat, ulon);
@@ -65,7 +66,7 @@ function main(username, ulat, ulon) {
     const acc = position.coords.accuracy;
     present_destination = [lat, lon];
     if (liveSetView) {
-      map.setView([data.lat, data.lon], 17);
+      map.setView([data.lat, data.lon], 13);
     }
     socket.emit("client-location", { lat, lon, acc, username: username, platform: platform.description });
     mylatlon.innerHTML = `Lat: ${lat} Lon: ${lon}`;

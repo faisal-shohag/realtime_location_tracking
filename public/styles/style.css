@@ -101,14 +101,21 @@ button{
 }
 
 .client-container{
-    /* display: none; */
+    display: none;
+    position: relative;
+    width: 19.75rem;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 99999;
 }
 
 
 .close-client{
     position: absolute;
-    top: 45%;
-    right: 17.2rem;
+    top: 50%;
+    left: -7%;
     font-size: 2rem;
     height: 50px;
     width: 50px;
@@ -120,10 +127,10 @@ button{
     color: #fff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: pointer;
-    z-index: 99999;
+    z-index: 999999999;
 }
 
-#clients{
+.clients{
     position: fixed;
     right: 0;
     bottom: 0%;
@@ -132,6 +139,7 @@ button{
     height: 100%;
     padding: 4rem 2rem 0rem 1rem;
     border-top-left-radius: 6rem;
+    width: 16.75rem;
 }
 
 .client-card {

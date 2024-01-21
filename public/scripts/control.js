@@ -43,10 +43,16 @@ navigator.geolocation.getCurrentPosition((position) => {
 const openClient = document.querySelector('.open-client')
 openClient.addEventListener('click', ()=>{
     clientContainer.style.display = 'block';
+    clientContainer.classList.remove('animate__fadeOutRight')
+    clientContainer.classList.add('animate__fadeInRight')
     window.history.back()
 })
 const closeClient = document.querySelector('.close-client')
-closeClient.addEventListener('click', ()=>{clientContainer.style.display = 'none'})
+closeClient.addEventListener('click', ()=>{
+    // clientContainer.style.display = 'none'
+    clientContainer.classList.remove('animate__fadeInRight')
+    clientContainer.classList.add('animate__fadeOutRight')
+})
 
 
 const go = document.querySelector('.go')
