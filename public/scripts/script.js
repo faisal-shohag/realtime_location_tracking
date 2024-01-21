@@ -11,7 +11,7 @@ function main(username, ulat, ulon) {
   let socket = io();
 
   // initializing
-  let map = L.map("map").setView([ulat, ulon], 10);
+  let map = L.map("map").setView([ulat, ulon], 14);
   map.on('click', mapClick);
  
   console.log(ulat, ulon);
@@ -66,7 +66,7 @@ function main(username, ulat, ulon) {
     const acc = position.coords.accuracy;
     present_destination = [lat, lon];
     if (liveSetView) {
-      map.setView([data.lat, data.lon], 13);
+      map.setView([data.lat, data.lon], 14);
     }
     socket.emit("client-location", { lat, lon, acc, username: username, platform: platform.description });
     mylatlon.innerHTML = `Lat: ${lat} Lon: ${lon}`;
