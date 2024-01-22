@@ -534,3 +534,38 @@ opacity: 0.5;
     cursor: pointer;
     z-index: 99999;
 } 
+
+.warning-container{
+    display: block;
+}
+
+.warnings{
+    z-index: 999;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    bottom: 14%;
+    left: 0%;
+    font-family: var(--gr);
+    padding: 1.4rem;
+    background-color: #42424211;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.warnings span{
+    font-family: var(--geb);
+}
+
+.warn{
+    color: #ff6a00;
+}
+
+.danger{
+    color: crimson;
+}
+
+.harm{
+    color: red;
+}

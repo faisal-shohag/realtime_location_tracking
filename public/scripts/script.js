@@ -1,20 +1,29 @@
 function main(username, ulat, ulon) {
   const clientList = document.querySelector("#clients");
+  const warnings = document.querySelector('.warnings')
   const bottomCard = document.querySelector(".bottom-card");
   const mylatlon = document.querySelector(".my-latlon");
   const view = document.querySelector(".view");
   const viewContainer = document.querySelector(".view-container");
   const myposition = document.querySelector(".myposition")
   const recomends = document.querySelector('.recomends')
-
+  
   // let socket = io.connect("https://locationreal.onrender.com/");
   let socket = io();
 
   // initializing
   let map = L.map("map").setView([ulat, ulon], 14);
   map.on('click', mapClick);
- 
   console.log(ulat, ulon);
+  // Draw polygons
+  var polygonCampus = L.polygon(coordinates, { color: "crimson" })
+  .addTo(map)
+  .bindPopup("Begum Rokeya University! The campus boundary!");
+var polygonMess = L.polygon(mess, { color: "green" })
+  .addTo(map)
+  .bindPopup("Mess! The mess boundary!");
+
+
   socket.emit("client-join-location", {
     lat: ulat,
     lon: ulon,
@@ -68,9 +77,10 @@ function main(username, ulat, ulon) {
     if (liveSetView) {
       map.setView([data.lat, data.lon], 14);
     }
-    socket.emit("client-location", { lat, lon, acc, username: username, platform: platform.description });
+    socket.emit("client-location", { lat, lon, acc, username: username, platform: platform.description});
     mylatlon.innerHTML = `Lat: ${lat} Lon: ${lon}`;
-
+    
+  
     // bottomCard.innerHTML = `
     //     <div class="distance">${
     //       distance < 1
@@ -102,15 +112,19 @@ function main(username, ulat, ulon) {
 
   navigator.geolocation.watchPosition(ok, error, options);
 
+  let d = 100;
   // Realtime user navigation
   let connected_users = {};
   let updateMap = () => {
     clientList.innerHTML = ``;
+    warnings.innerHTML = ``
     map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         map.removeLayer(layer);
       }
     });
+
+    let line;
 
     for (let key in connected_users) {
       if (connected_users.hasOwnProperty(key)) {
@@ -119,7 +133,9 @@ function main(username, ulat, ulon) {
           [connected_users[key].lat, connected_users[key].lon],
           coordinates
         );
-        let distance = calculateDistance(connected_users[key].lat, connected_users[key].lon, 25.71686, 89.2622945);
+        let closestPoint = L.GeometryUtil.closest(map, polygonCampus, [connected_users[key].lat, connected_users[key].lon], true);
+        console.log(closestPoint)
+        let distance = closestPoint.distance
         clientList.innerHTML += `
             <div class="client-card">
             <div class="id">${connected_users[key].username}</div>
@@ -127,14 +143,48 @@ function main(username, ulat, ulon) {
             <div class="latlon">Lat: ${connected_users[key].lat} | Lon: ${
           connected_users[key].lon
         }</div>
-            <div class="status">Campus status: ${
-              campus_stat ? "Inside!" : `Outside(<b>${ distance < 1
-                  ? (distance * 1000).toFixed(2) + "<span>m away</span>"
-                  : distance.toFixed(2) + "<span>km away</span><b>"
+            <div class="status">Boundary status: ${
+              campus_stat ? "Inside!" : `Outside(<b>${ distance < 1000
+                  ? (distance).toFixed(2) + "<span>m away from the nearest boundary</span>"
+                  : (distance/1000).toFixed(2) + "<span>km away</span><b>"
               })`
             }</div>
+            
             </div>
             `;
+            draw = document.getElementById('drawLine')
+           
+
+            // if(line){
+            //   map.removeLayer(line)
+            // }
+            // line = L.polyline([
+            //   [closestPoint.lat, closestPoint.lng],
+            //   [connected_users[key].lat, connected_users[key].lon]
+            // ]).addTo(map)
+            
+            // draw.addEventListener('click', () =>{
+            //   console.log(draw)
+            //   (draw.checked) ? line.addTo(map) : map.removeLayer(line.addTo(map))
+            //  })
+        // warnings 
+        if(campus_stat) {
+          warnings.innerHTML += `
+          <div class="harm"><b>[HARM]</b> FAISAL is <span>inside</span> your boundary!</div>
+          `
+        } else if(distance  >= 50 && distance <= 101) {
+          warnings.innerHTML += `
+          <div class="warn"><b>[WARNING]</b> FAISAL is <span>${distance.toFixed(2)}m</span> away from boundary lines</div>
+          `
+        } else if(distance > 0 && distance <= 51) {
+          warnings.innerHTML += `
+          <div class="danger"><b>[DANGER]</b> FAISAL is <span>${distance.toFixed(2)}m</span> away from boundary lines</div>
+          `
+        } else if(distance == 0){
+          warnings.innerHTML += `
+          <div class="harm"><b>[HARM]</b> FAISAL is <span>just crossed</span> your boundary!</div>
+          `
+        } 
       }
     }
   };
@@ -147,7 +197,7 @@ function main(username, ulat, ulon) {
       username: data.username,
       platform: data.platform,
       pointMarker: function () {
-        L.marker([data.lat, data.lon])
+        marker = L.marker([data.lat, data.lon])
           .addTo(map)
           .bindTooltip(data.username ? data.username : data.id, {
             parmanent: true,
@@ -167,16 +217,7 @@ function main(username, ulat, ulon) {
     );
   });
 
-  setTimeout(() => {
-    let polygonCampus = L.polygon(coordinates, { color: "crimson" })
-      .addTo(map)
-      .bindPopup("Begum Rokeya University! The campus boundary!");
-    // map.fitBounds(polygonCampus.getBounds());
-    let polygonMess = L.polygon(mess, { color: "green" })
-      .addTo(map)
-      .bindPopup("Mess! The mess boundary!");
-    // map.fitBounds(polygonMess.getBounds());
-  }, 2000);
+ 
 
   let rayCasting = (coords, polygon) => {
     let x = coords[0];
