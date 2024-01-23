@@ -113,6 +113,7 @@ var polygonMess = L.polygon(mess, { color: "green" })
   navigator.geolocation.watchPosition(ok, error, options);
 
   let d = 100;
+  let polylineGroup = L.layerGroup().addTo(map)
   // Realtime user navigation
   let connected_users = {};
   let updateMap = () => {
@@ -124,7 +125,7 @@ var polygonMess = L.polygon(mess, { color: "green" })
       }
     });
 
-    let line;
+    polylineGroup.clearLayers()
 
     for (let key in connected_users) {
       if (connected_users.hasOwnProperty(key)) {
@@ -134,8 +135,8 @@ var polygonMess = L.polygon(mess, { color: "green" })
           coordinates
         );
         let closestPoint = L.GeometryUtil.closest(map, polygonCampus, [connected_users[key].lat, connected_users[key].lon], true);
-        console.log(closestPoint)
-        let distance = closestPoint.distance
+        // console.log(closestPoint)
+        let distance = calculateDistance(closestPoint.lat, closestPoint.lng, connected_users[key].lat, connected_users[key].lon)
         clientList.innerHTML += `
             <div class="client-card">
             <div class="id">${connected_users[key].username}</div>
@@ -154,14 +155,10 @@ var polygonMess = L.polygon(mess, { color: "green" })
             `;
             draw = document.getElementById('drawLine')
            
-
-            // if(line){
-            //   map.removeLayer(line)
-            // }
-            // line = L.polyline([
-            //   [closestPoint.lat, closestPoint.lng],
-            //   [connected_users[key].lat, connected_users[key].lon]
-            // ]).addTo(map)
+            L.polyline([
+              [closestPoint.lat, closestPoint.lng],
+              [connected_users[key].lat, connected_users[key].lon]
+            ], {color: 'crimson'}).addTo(polylineGroup)
             
             // draw.addEventListener('click', () =>{
             //   console.log(draw)
@@ -172,15 +169,15 @@ var polygonMess = L.polygon(mess, { color: "green" })
           warnings.innerHTML += `
           <div class="harm"><b>[HARM]</b> FAISAL is <span>inside</span> your boundary!</div>
           `
-        } else if(distance  >= 50 && distance <= 101) {
+        } else if(parseInt(distance)  >= 50 && parseInt(distance) <= 100) {
           warnings.innerHTML += `
           <div class="warn"><b>[WARNING]</b> FAISAL is <span>${distance.toFixed(2)}m</span> away from boundary lines</div>
           `
-        } else if(distance > 0 && distance <= 51) {
+        } else if(parseInt(distance) > 0 && parseInt(distance) <= 50) {
           warnings.innerHTML += `
           <div class="danger"><b>[DANGER]</b> FAISAL is <span>${distance.toFixed(2)}m</span> away from boundary lines</div>
           `
-        } else if(distance == 0){
+        } else if(parseInt(distance) == 0){
           warnings.innerHTML += `
           <div class="harm"><b>[HARM]</b> FAISAL is <span>just crossed</span> your boundary!</div>
           `
